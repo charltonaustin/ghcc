@@ -3,6 +3,7 @@ GEM
   specs:
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    csv (3.2.8)
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
       logger
@@ -32,6 +33,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  csv
   faraday-http-cache
   faraday-multipart
   faraday-retry

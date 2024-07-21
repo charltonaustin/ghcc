@@ -6,3 +6,4 @@ gem "octokit"
 gem 'faraday-http-cache'
 gem 'faraday-retry'
 gem 'faraday-multipart'
+gem 'csv'
