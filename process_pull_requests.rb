@@ -2,28 +2,15 @@ require 'date'
 require 'csv'
 start_date = Date.today - 14
 end_date = Date.today
-names_to_usernames = {
-  "Jonah Householder": "JonahHouseKin",
-  "Christian Ruiz": "rueeazy",
-  "Jose Elera": "jelera",
-  "Hannah Stannard": "hannahrstannard",
-  "Caleb Masters": "thecaleblee",
-  "Victor Lee": "victorclee",
-  "Michael Specter": "mspecter-kin",
-  "Kyle Dayton": "kyledayton",
-  "Arvin Randhawa": "arvin-kin",
-  "Michael Nash": "utumno86",
-  "Andrew Ferguson": "Drewfergusson",
-  "Violet": "rvehall-kin",
-  "Taylor Galloway": "tylrs",
-  "Jay Jayabose": "jayjayabose",
-  "Gary Cuga-Moylan": "gecugamo",
-  "Joshua Crawford": "joshuacrawford-kin",
-  "Alex Berry": "alex-berry-kin",
-  "Mario Saraiva": "mariosaraiva",
-  "Charlton Austin": "charltonaustin",
-  "Ken Hebel": "hebelken-kin"
-}
+def csv_to_hash(file_name)
+  usernames = {}
+  CSV.foreach(file_name, headers: true) do |row|
+    usernames[row[0].strip.to_sym] = row[1].strip
+  end
+  usernames
+end
+
+names_to_usernames = csv_to_hash('data/users.csv')
 usernames_to_names = names_to_usernames.invert
 
 def read_data_from_csv(file_path)

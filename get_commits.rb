@@ -3,30 +3,19 @@ require 'date'
 require 'csv'
 
 ACCESS_TOKEN = ENV['ACCESS_TOKEN']
+def csv_to_hash(file_name)
+  usernames = {}
+  CSV.foreach(file_name, headers: true) do |row|
+    usernames[row[0].strip.to_sym] = row[1].strip
+  end
+  usernames
+end
 
-usernames = {
-  "Jonah Householder": "JonahHouseKin",
-  "Christian Ruiz": "rueeazy",
-  "Jose Elera": "jelera",
-  "Hannah Stannard": "hannahrstannard",
-  "Caleb Masters": "thecaleblee",
-  "Victor Lee": "victorclee",
-  "Michael Specter": "mspecter-kin",
-  "Kyle Dayton": "kyledayton",
-  "Arvin Randhawa": "arvin-kin",
-  "Michael Nash": "utumno86",
-  "Andrew Ferguson": "Drewfergusson",
-  "Violet": "rvehall-kin",
-  "Taylor Galloway": "tylrs",
-  "Sundar Jayabose": "jayjayabose",
-  "Gary Cuga-Moylan": "gecugamo",
-  "Joshua Crawford": "joshuacrawford-kin",
-  "Alex Berry": "alex-berry-kin",
-}
+usernames = csv_to_hash('data/users.csv')
 
 client = Octokit::Client.new(access_token: ACCESS_TOKEN)
 client.default_media_type = "application/vnd.github+json"
-client.auto_paginate = false
+client.auto_paginate = true
 
 owner = 'kin'
 repo = 'report-service'
@@ -59,7 +48,7 @@ puts "Description: #{repository.description}"
 puts "\nwrite commits to csv"
 already_exists = File.exist?("./data/contributions.csv")
 CSV.open("data/contributions.csv", 'a') do |csv|
-  
+
   csv << ['TYPE', 'Created At', 'User', 'REPOSITORY', 'URL', 'Number', 'Title'] unless already_exists
 
   pull_requests.each do |commit|
