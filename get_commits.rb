@@ -2,7 +2,7 @@ require 'octokit'
 require 'date'
 require 'csv'
 
-ACCESS_TOKEN = ENV['ACCESS_TOKEN']
+ACCESS_TOKEN = ENV['GHCC_ACCESS_TOKEN']
 def csv_to_hash(file_name)
   usernames = {}
   CSV.foreach(file_name, headers: true) do |row|

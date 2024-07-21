@@ -1,7 +1,5 @@
 require 'date'
 require 'csv'
-start_date = Date.today - 14
-end_date = Date.today
 def csv_to_hash(file_name)
   usernames = {}
   CSV.foreach(file_name, headers: true) do |row|
@@ -10,15 +8,10 @@ def csv_to_hash(file_name)
   usernames
 end
 
-names_to_usernames = csv_to_hash('data/users.csv')
-usernames_to_names = names_to_usernames.invert
-
 def read_data_from_csv(file_path)
   csv_content = CSV.open(file_path, headers: true, header_converters: :symbol)
   csv_content.to_a.map(&:to_hash)
 end
-
-pull_requests = read_data_from_csv("./data/contributions.csv")
 
 def filter_by(end_date, pull_requests, start_date, username)
   pull_requests.select do |pull_request|
@@ -29,26 +22,28 @@ def filter_by(end_date, pull_requests, start_date, username)
     all_true.all?
   end
 end
-
-user_pull_requests = {}
-usernames_to_names.keys.each do |username|
-  user_pull_requests[username] = filter_by(end_date, pull_requests, start_date, username)
-end
-
-user_pull_requests = user_pull_requests.sort_by do |username, prs|
-  prs.size
-end
-
 def print_results(user_pull_requests, usernames)
   user_pull_requests.each do |username, contributions|
-
     commits = contributions.select { |record| record[:type] == "COMMIT" }
     prs = contributions.select { |record| record[:type] == "PR" }
     puts "#{usernames[username]}: #{contributions.size}, commits: #{commits.size}, prs: #{prs.size}"
   end
 
 end
+def get_contributions(start_date, end_date)
+  names_to_usernames = csv_to_hash('data/users.csv')
+  usernames_to_names = names_to_usernames.invert
+  pull_requests = read_data_from_csv("data/contributions.csv")
+  user_pull_requests = {}
+  usernames_to_names.keys.each do |username|
+    user_pull_requests[username] = filter_by(end_date, pull_requests, start_date, username)
+  end
 
-print_results(user_pull_requests, usernames_to_names)
+  user_pull_requests = user_pull_requests.sort_by do |_, prs|
+    prs.size
+  end
+  print_results(user_pull_requests, usernames_to_names)
+end
+
 
 

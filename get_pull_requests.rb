@@ -2,7 +2,7 @@ require 'octokit'
 require 'date'
 require 'csv'
 
-ACCESS_TOKEN = ENV['ACCESS_TOKEN']
+ACCESS_TOKEN = ENV['GHCC_ACCESS_TOKEN']
 
 client = Octokit::Client.new(access_token: ACCESS_TOKEN)
 client.default_media_type = "application/vnd.github+json"
@@ -38,10 +38,9 @@ repos.each do |repo|
   puts "Description: #{repository.description}"
 
   puts "\nwrite pull requests to csv"
-  already_exists = File.exist?("./data/contributions.csv")
-  CSV.open("./data/contributions.csv", 'a') do |csv|
+  already_exists = File.exist?("data/contributions.csv")
+  CSV.open("data/contributions.csv", 'a') do |csv|
     csv << ['TYPE', 'Created At', 'User', 'REPOSITORY', 'URL', 'Number', 'Title'] unless already_exists
-
     pull_requests.each do |pr|
       csv << ['PR', pr.created_at, pr.user.login, repo, pr.html_url, pr.number, pr.title,]
     end

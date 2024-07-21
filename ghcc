@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+require "thor"
+require_relative "#{__dir__}/process_contributions"
+class GHCC < Thor
+  class_option :verbose, :type => :boolean
+
+  desc "contributions", "Get contributions from user(s)"
+  method_option :start_date, :type => :string, default: "#{Date.today - 14}"
+  method_option :end_date, :type => :string, default: "#{Date.today}"
+  def contributions
+    start_date = Date.parse(options[:start_date])
+    end_date = Date.parse(options[:end_date])
+    get_contributions(start_date, end_date)
+  end
+
+  desc "goodbye", "say goodbye to the world"
+  def goodbye
+    puts "> saying goodbye" if options[:verbose]
+    puts "Goodbye World"
+    puts "> done saying goodbye" if options[:verbose]
+  end
+end
+
+GHCC.start(ARGV)

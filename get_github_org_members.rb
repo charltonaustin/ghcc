@@ -3,7 +3,7 @@ require 'octokit'
 def get_github_org_members(org_name, access_token)
   client = Octokit::Client.new(access_token: access_token)
   client.auto_paginate = true
-  members = client.org_members(org_name, per_page: 100, page: 1)
+  members = client.org_members(org_name)
   # puts members.fields
 
   members.each do |member|
@@ -15,5 +15,5 @@ def get_github_org_members(org_name, access_token)
   end
 end
 
-ACCESS_TOKEN = ENV['ACCESS_TOKEN']
+ACCESS_TOKEN = ENV['GHCC_ACCESS_TOKEN']
 get_github_org_members('kin', ACCESS_TOKEN)
