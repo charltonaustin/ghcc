@@ -10,8 +10,6 @@ def get_github_org_members(org_name, access_token)
     user = client.user(user=member.login)
     puts "User: #{member.login}"
     puts "Name: #{user.name}"
-    puts "Email: #{user.email}"
-    puts "--------------------------------"
   end
 end
 

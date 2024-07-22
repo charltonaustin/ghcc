@@ -2,9 +2,10 @@
 
 source "https://rubygems.org"
 
-gem "octokit"
-gem 'faraday-http-cache'
-gem 'faraday-retry'
-gem 'faraday-multipart'
 gem 'csv'
+gem 'faraday-http-cache'
+gem 'faraday-multipart'
+gem 'faraday-retry'
+gem "octokit"
+gem 'sqlite3'
 gem 'thor'

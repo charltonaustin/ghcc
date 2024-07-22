@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require "thor"
-require_relative "#{__dir__}/process_contributions"
+require_relative "#{__dir__}/commands/process_contributions"
+require_relative "#{__dir__}/commands/get_commits"
 class GHCC < Thor
   class_option :verbose, :type => :boolean
 
@@ -13,11 +14,11 @@ class GHCC < Thor
     get_contributions(start_date, end_date)
   end
 
-  desc "goodbye", "say goodbye to the world"
-  def goodbye
-    puts "> saying goodbye" if options[:verbose]
-    puts "Goodbye World"
-    puts "> done saying goodbye" if options[:verbose]
+  desc "commits", "add commits to contributions"
+  method_option :repo, :type => :string, default: "kin/report-service"
+  def commits
+    repo = options[:repo]
+    refresh_commits(repo)
   end
 end
 
