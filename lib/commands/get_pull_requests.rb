@@ -17,7 +17,7 @@ repos.each do |repo|
 
   puts "Repository: #{repository.full_name}"
   puts "\nwrite pull requests to csv"
-  already_exists = File.exist?("#{__dir__}/../data/contributions.csv")
+  already_exists = File.exist?("#{__dir__}/../../data/contributions.csv")
   CSV.open("data/contributions.csv", 'a') do |csv|
     csv << ['Type', 'Created At', 'User', 'Repository', 'URL'] unless already_exists
     pull_requests.each do |pr|

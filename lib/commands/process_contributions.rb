@@ -31,9 +31,9 @@ def print_results(user_pull_requests, usernames)
 
 end
 def get_contributions(start_date, end_date)
-  names_to_usernames = csv_to_hash("#{__dir__}/../data/users.csv")
+  names_to_usernames = csv_to_hash("#{__dir__}/../../data/users.csv")
   usernames_to_names = names_to_usernames.invert
-  pull_requests = read_data_from_csv("#{__dir__}/../data/contributions.csv")
+  pull_requests = read_data_from_csv("#{__dir__}/../../data/contributions.csv")
   user_pull_requests = {}
   usernames_to_names.keys.each do |username|
     user_pull_requests[username] = filter_by(end_date, pull_requests, start_date, username)

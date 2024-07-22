@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 require "thor"
-require_relative "#{__dir__}/commands/process_contributions"
-require_relative "#{__dir__}/commands/get_commits"
+require "sequel"
+require_relative "#{__dir__}/lib/commands/process_contributions"
+require_relative "#{__dir__}/lib/commands/get_commits"
 class GHCC < Thor
   # class_option :verbose, :type => :boolean
 
@@ -27,6 +28,19 @@ class GHCC < Thor
   def commits
     repo = options[:repo]
     refresh_commits(repo)
+  end
+  
+  desc "install", "Symlinks this file to /usr/local/bin"
+  def install
+    File.symlink(File.expand_path(__FILE__), "/usr/local/bin/#{File.basename(__FILE__)}")
+  end
+
+  desc "run_migrations", "Updates current data model"
+  def run_migrations
+    Sequel.extension :migration
+    Sequel.connect("sqlite://#{__dir__}/data/ghcc.db") do |db|
+      Sequel::Migrator.run(db, "#{__dir__}/lib/migrations")
+    end
   end
 end
 
