@@ -11,10 +11,12 @@ bundle exec ruby <name of command>.rb
 ```
 
 ## Script Commands
-- `get_github_org_members.rb`: Adds users to users.csv.
-- `get_pull_requests.rb`: Adds pull requests to contributions.csv.
-- `get_reviews.rb`: Adds reviews to contributions.csv. 
+- `get_github_org_members.rb`: Saves users.
+- `get_pull_requests.rb`: Saves pull requests to contributions.
+- `get_reviews.rb`: Saves reviews to contributions. 
 
 ## CLI Commands
-- `ghcc commits`: Adds commit data to contributions.csv in the data folder.
-- `ghcc contributions`: Processes contributions.csv and prints people's contributions. 
+- `ghcc commits`: Saves commits to contributions.
+- `ghcc contributions`: Processes contributions and prints them. 
+- `ghcc run_migrations`: A development script that updates the data model. 
+- `ghcc install`: Installs the current version of `ghcc` file. 
