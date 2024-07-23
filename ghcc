@@ -3,6 +3,7 @@ require "thor"
 require "sequel"
 require_relative "#{__dir__}/lib/commands/process_contributions"
 require_relative "#{__dir__}/lib/commands/get_commits"
+require_relative "#{__dir__}/lib/shared/repository/database"
 class GHCC < Thor
   # class_option :verbose, :type => :boolean
 
@@ -38,7 +39,7 @@ class GHCC < Thor
   desc "run_migrations", "Updates current data model"
   def run_migrations
     Sequel.extension :migration
-    Sequel.connect("sqlite://#{__dir__}/data/ghcc.db") do |db|
+    get_connection do |db| 
       Sequel::Migrator.run(db, "#{__dir__}/lib/migrations")
     end
   end
