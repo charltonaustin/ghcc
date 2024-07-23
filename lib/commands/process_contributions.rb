@@ -22,7 +22,7 @@ def filter_by(end_date, pull_requests, start_date, username)
     all_true.all?
   end
 end
-def print_results(user_pull_requests, usernames)
+def print_results(user_pull_requests, usernames, logger)
   user_pull_requests.each do |username, contributions|
     commits = contributions.select { |record| record[:type] == "COMMIT" }
     prs = contributions.select { |record| record[:type] == "PR" }
@@ -30,7 +30,7 @@ def print_results(user_pull_requests, usernames)
   end
 
 end
-def get_contributions(start_date, end_date)
+def get_contributions(start_date, end_date, logger)
   names_to_usernames = csv_to_hash("#{__dir__}/../../data/users.csv")
   usernames_to_names = names_to_usernames.invert
   pull_requests = read_data_from_csv("#{__dir__}/../../data/contributions.csv")
@@ -42,7 +42,7 @@ def get_contributions(start_date, end_date)
   user_pull_requests = user_pull_requests.sort_by do |_, prs|
     prs.size
   end
-  print_results(user_pull_requests, usernames_to_names)
+  print_results(user_pull_requests, usernames_to_names, logger)
 end
 
 

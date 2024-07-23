@@ -1,8 +1,7 @@
-require 'octokit'
 require 'date'
 require 'csv'
+require_relative '../../shared/github_client'
 
-ACCESS_TOKEN = ENV['GHCC_ACCESS_TOKEN']
 def csv_to_hash(file_name)
   usernames = {}
   CSV.foreach(file_name, headers: true) do |row|
@@ -10,14 +9,13 @@ def csv_to_hash(file_name)
   end
   usernames
 end
-def refresh_commits(repo)
-  client = Octokit::Client.new(access_token: ACCESS_TOKEN)
-  client.default_media_type = "application/vnd.github+json"
-  client.auto_paginate = true
-  usernames = csv_to_hash("#{__dir__}/../../data/users.csv")
+
+def refresh_commits(repo, logger)
+  client = get_client
+  usernames = csv_to_hash("#{__dir__}/../../../data/users.csv")
   commits = client.list_commits("#{repo}")
-  puts "\nwrite commits to csv"
-  already_exists = File.exist?("#{__dir__}/../../data/contributions.csv")
+  logger.debug("write commits to csv")
+  already_exists = File.exist?("#{__dir__}/../../../data/contributions.csv")
   CSV.open("data/contributions.csv", 'a') do |csv|
 
     csv << ['Type', 'Created At', 'User', 'Repository', 'URL'] unless already_exists

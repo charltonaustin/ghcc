@@ -1,4 +1,4 @@
-require_relative '../../shared/repository/database'
+require_relative '../../shared/database'
 def get_latest
   get_connection do |db|
     ds = db["SELECT number FROM pull_requests ORDER BY pr_creation DESC LIMIT 1"]

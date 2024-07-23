@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 require "thor"
 require "sequel"
-require_relative "#{__dir__}/lib/commands/process_contributions"
-require_relative "#{__dir__}/lib/commands/get_commits"
-require_relative "#{__dir__}/lib/shared/repository/database"
+require_relative "lib/commands/process_contributions"
+require_relative "lib/commands/commits/refresh"
+require_relative "lib/shared/database"
+require_relative "lib/shared/logger"
+
 class GHCC < Thor
   # class_option :verbose, :type => :boolean
 
@@ -16,9 +18,10 @@ class GHCC < Thor
                 default: "#{Date.today}",
                 :desc => "Last date to count contributions"
   def contributions
+    logger = get_logger
     start_date = Date.parse(options[:start_date])
     end_date = Date.parse(options[:end_date])
-    get_contributions(start_date, end_date)
+    get_contributions(start_date, end_date, logger)
   end
 
   desc "commits", "Adds commits to contributions"
@@ -27,8 +30,9 @@ class GHCC < Thor
                 default: "kin/report-service",
                 :desc => "Name of the repository you want to get commits for"
   def commits
+    logger = get_logger
     repo = options[:repo]
-    refresh_commits(repo)
+    refresh_commits(repo, logger)
   end
   
   desc "install", "Symlinks this file to /usr/local/bin"
