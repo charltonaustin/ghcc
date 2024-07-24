@@ -7,6 +7,7 @@ require_relative "lib/shared/database"
 require_relative "lib/shared/logger"
 require_relative 'lib/commands/users/refresh'
 require_relative 'lib/commands/pull_requests/refresh'
+require_relative 'lib/commands/users/users'
 
 class GHCC < Thor
   # class_option :verbose, :type => :boolean
@@ -39,14 +40,10 @@ class GHCC < Thor
       refresh_commits(db, repo, logger)
     end
   end
-  desc "users", "Refresh users"
-  def users
-    logger = get_logger
-    client = get_client
-    get_connection do |db|
-      refresh_github_users(db, 'kin', client, logger)
-    end
-  end
+  
+  desc "users", "manage github users"
+  subcommand "users", Users
+  
   desc "pull_requests", "Refresh pull requests"
   def pull_requests
     client = get_client

@@ -1,4 +1,6 @@
 # GitHub Contribution Counter (GHCC)
+## Dependencies
+For ruby please see the `.ruby-version` file
 ## To setup
 ```bash
 bundle install
