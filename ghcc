@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
 require "thor"
 require "sequel"
-require_relative "lib/commands/process_contributions"
+require_relative "lib/commands/contributions/process_contributions"
 require_relative "lib/commands/commits/refresh"
 require_relative "lib/shared/database"
 require_relative "lib/shared/logger"
+require_relative 'lib/commands/users/refresh'
+require_relative 'lib/commands/pull_requests/refresh'
 
 class GHCC < Thor
   # class_option :verbose, :type => :boolean
@@ -18,10 +20,11 @@ class GHCC < Thor
                 default: "#{Date.today}",
                 :desc => "Last date to count contributions"
   def contributions
-    logger = get_logger
     start_date = Date.parse(options[:start_date])
     end_date = Date.parse(options[:end_date])
-    get_contributions(start_date, end_date, logger)
+    get_connection do |db|
+      get_contributions(db, start_date, end_date)
+    end
   end
 
   desc "commits", "Adds commits to contributions"
@@ -32,7 +35,28 @@ class GHCC < Thor
   def commits
     logger = get_logger
     repo = options[:repo]
-    refresh_commits(repo, logger)
+    get_connection do |db|
+      refresh_commits(db, repo, logger)
+    end
+  end
+  desc "users", "Refresh users"
+  def users
+    logger = get_logger
+    client = get_client
+    get_connection do |db|
+      refresh_github_users(db, 'kin', client, logger)
+    end
+  end
+  desc "pull_requests", "Refresh pull requests"
+  def pull_requests
+    client = get_client
+    client.auto_paginate = false
+    logger = get_logger
+    owner = 'kin'
+    repos = %w[maestro ihop dot-com product-api rater-api sheng]
+    get_connection do |db|
+      refresh_pull_requests(db, client, owner, repos, logger)
+    end
   end
   
   desc "install", "Symlinks this file to /usr/local/bin"
