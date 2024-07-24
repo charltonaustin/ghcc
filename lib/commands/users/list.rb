@@ -3,7 +3,7 @@ require 'fuzzystringmatch'
 
 def print(users)
   users.each do |user|
-    puts "Username : #{user[:user_name]}, name : #{user[:name]}, to_process : #{user[:to_process]} "
+    puts "Username: #{user[:user_name]}, name: #{user[:name]}, to_process: #{user[:to_process]} "
   end
 end
 
@@ -12,9 +12,14 @@ def matches(jarow, match, value)
   name_match && (name_match > 0.7)
 end
 
-def list_from(db, match)
+def list_from(db, match, to_process)
   users = get_users(db)
-  if match.empty?
+  if to_process
+    users = users.select do |user|
+      user[:to_process]
+    end
+  end
+  if match.nil? || match.empty?
     print(users)
     return
   end
