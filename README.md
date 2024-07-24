@@ -8,6 +8,11 @@ bundle install
 You have to export a variable called `GHCC_ACCESS_TOKEN` with classic Personal access GitHub token.
 It needs to have the right permissions to get the information.
 
+## To run tests
+```bash
+bundle exec rspec  --pattern **/*_spec.rb 
+```
+
 ## CLI Commands
 ### To run
 Before you install it cd to the directory and run the following: 

@@ -9,6 +9,7 @@ gem 'faraday-multipart'
 gem 'faraday-retry'
 gem 'fuzzy-string-match'
 gem "octokit"
+gem 'rspec'
 gem 'sequel'
 gem 'sqlite3'
 gem 'thor'
