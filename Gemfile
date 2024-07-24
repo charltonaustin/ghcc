@@ -7,6 +7,7 @@ gem 'csv'
 gem 'faraday-http-cache'
 gem 'faraday-multipart'
 gem 'faraday-retry'
+gem 'fuzzy-string-match'
 gem "octokit"
 gem 'sequel'
 gem 'sqlite3'

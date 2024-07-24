@@ -5,3 +5,7 @@ def save_user_name(db, user_name, name)
     user_name, name
   ].insert
 end
+
+def get_users(db)
+  db["SELECT * FROM users"].all
+end

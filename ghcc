@@ -5,7 +5,6 @@ require_relative "lib/commands/contributions/process_contributions"
 require_relative "lib/commands/commits/refresh"
 require_relative "lib/shared/database"
 require_relative "lib/shared/logger"
-require_relative 'lib/commands/users/refresh'
 require_relative 'lib/commands/pull_requests/refresh'
 require_relative 'lib/commands/users/users'
 

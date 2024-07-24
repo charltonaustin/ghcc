@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    RubyInline (3.14.1)
+      ZenTest (~> 4.3)
+    ZenTest (4.12.2)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
     bigdecimal (3.1.8)
@@ -16,6 +19,8 @@ GEM
       net-http
     faraday-retry (2.2.1)
       faraday (~> 2.0)
+    fuzzy-string-match (1.0.1)
+      RubyInline (>= 3.8.6)
     logger (1.6.0)
     mini_portile2 (2.8.7)
     multipart-post (2.4.1)
@@ -45,6 +50,7 @@ DEPENDENCIES
   faraday-http-cache
   faraday-multipart
   faraday-retry
+  fuzzy-string-match
   octokit
   sequel
   sqlite3
