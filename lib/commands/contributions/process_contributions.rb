@@ -1,6 +1,7 @@
 require 'date'
 require 'csv'
 require_relative 'repository'
+require_relative '../repository'
 
 def print_results(user_contributions)
   user_contributions.each do |_, data|

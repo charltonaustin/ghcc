@@ -15,3 +15,9 @@ def toggle_by_username(db, logger, user_name)
   logger.debug("to_process: #{to_process}")
   db["UPDATE users SET to_process = ? WHERE user_name = ?", (not to_process), user_name].update
 end
+
+def toggle_by_name(db, logger, name)
+  to_process = db["SELECT * FROM users WHERE name = ?", name].first[:to_process]
+  logger.debug("to_process: #{to_process}")
+  db["UPDATE users SET to_process = ? WHERE name = ?", (not to_process), name].update
+end

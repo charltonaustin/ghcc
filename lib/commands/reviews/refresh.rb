@@ -1,5 +1,7 @@
+require_relative '../repository'
 def refresh_reviews(start_date, end_date)
-  # get pull_requests for the time period
+  users = get_users_to_process
+  
   # get reviews for pull requests
   # save reviews
 end
