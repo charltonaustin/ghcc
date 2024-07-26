@@ -31,7 +31,7 @@ class Users < Thor
     search = options[:search]
     to_process = options[:to_process]
     get_connection do |db|
-      list_from(db, search, to_process)
+      list_users_from(db, search, to_process)
     end
   end
 

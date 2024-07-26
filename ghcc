@@ -7,8 +7,12 @@ require_relative "lib/shared/database"
 require_relative "lib/shared/logger"
 require_relative 'lib/commands/pull_requests/refresh'
 require_relative 'lib/commands/users/users'
+require_relative 'lib/commands/repos/repo'
 
 class GHCC < Thor
+  def self.exit_on_failure?
+    true
+  end
   # class_option :verbose, :type => :boolean
 
   desc "contributions", "Get contributions from user(s)"
@@ -43,15 +47,16 @@ class GHCC < Thor
   desc "users", "manage github users"
   subcommand "users", Users
   
+  desc "repos", "manage github repositories"
+  subcommand "repos", Repo
+  
   desc "pull_requests", "Refresh pull requests"
   def pull_requests
     client = get_client
     client.auto_paginate = false
     logger = get_logger
-    owner = 'kin'
-    repos = %w[maestro ihop dot-com product-api rater-api sheng]
     get_connection do |db|
-      refresh_pull_requests(db, client, owner, repos, logger)
+      refresh_pull_requests(db, client, logger)
     end
   end
   

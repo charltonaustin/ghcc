@@ -27,9 +27,10 @@ def get_remaining_pull_requests(client, db, logger, pull_request, repository_nam
   end
 end
 
-def refresh_pull_requests(db, client, owner, repos, logger)
+def refresh_pull_requests(db, client, logger)
+  repos = get_repos_to_refresh(db)
   repos.each do |repo|
-    repository_name = "#{owner}/#{repo}"
+    repository_name = "#{repo[:organization]}/#{repo[:name]}"
     logger.debug("Getting pull requests for #{repository_name}")
     has_saved = has_saved_pull_request?(db, repository_name)
     logger.debug("has_saved #{has_saved}")

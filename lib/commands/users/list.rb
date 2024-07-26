@@ -12,7 +12,7 @@ def matches(jarow, match, value)
   name_match && (name_match > 0.7)
 end
 
-def list_from(db, match, to_process)
+def list_users_from(db, match, to_process)
   users = get_users(db)
   if to_process
     users = users.select do |user|
