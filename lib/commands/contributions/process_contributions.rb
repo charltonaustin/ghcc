@@ -18,6 +18,7 @@ def print_results(user_contributions)
 
 end
 def get_contributions(db, start_date, end_date)
+  puts "start_date: #{start_date}, end_date: #{end_date}"
   user_contributions = {}
   users = get_users_to_process(db)
   users.each do |user|
@@ -26,7 +27,7 @@ def get_contributions(db, start_date, end_date)
   end
 
   user_contributions = user_contributions.sort_by do |_, data|
-    data[0][:commits].size + data[0][:pull_requests].size
+    data[0][:commits].size + data[0][:pull_requests].size + data[0][:reviews].size
   end
   print_results(user_contributions)
 end
