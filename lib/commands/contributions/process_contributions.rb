@@ -7,11 +7,13 @@ def print_results(user_contributions)
   user_contributions.each do |_, data|
     commits = data[0][:commits]
     prs = data[0][:pull_requests]
+    reviews = data[0][:reviews]
     name = data[1][:name]
     if name.nil?
       name = data[1][:user_name]
     end
-    puts "#{name}: #{commits.size + prs.size}, commits: #{commits.size}, prs: #{prs.size}"
+    puts "#{name}: total: #{commits.size + prs.size + reviews.size}, "+
+           "commits: #{commits.size}, prs: #{prs.size}. reviews: #{reviews.size}"
   end
 
 end

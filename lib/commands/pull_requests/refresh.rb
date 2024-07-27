@@ -1,4 +1,5 @@
 require_relative 'repository'
+require_relative '../repository'
 
 def update_pull_requests(client, db, logger, repository_name)
   logger.debug("no prs saved getting them all")
@@ -28,7 +29,7 @@ def get_remaining_pull_requests(client, db, logger, pull_request, repository_nam
 end
 
 def refresh_pull_requests(db, client, logger)
-  repos = get_repos_to_refresh(db)
+  repos = get_repos_to_process(db)
   repos.each do |repo|
     repository_name = "#{repo[:organization]}/#{repo[:name]}"
     logger.debug("Getting pull requests for #{repository_name}")

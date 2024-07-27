@@ -14,7 +14,3 @@ def save_pull_request(db, created_at, user_name, url, repo, number)
       created_at, user_name, url, repo, number
     ].insert
 end
-
-def get_repos_to_refresh(db)
-    db["SELECT * FROM repos WHERE to_process = ?", true].all
-end

@@ -8,6 +8,7 @@ require_relative "lib/shared/logger"
 require_relative 'lib/commands/pull_requests/refresh'
 require_relative 'lib/commands/users/users'
 require_relative 'lib/commands/repos/repo'
+require_relative 'lib/commands/reviews/reviews'
 
 class GHCC < Thor
   def self.exit_on_failure?
@@ -49,6 +50,9 @@ class GHCC < Thor
   
   desc "repos", "manage github repositories"
   subcommand "repos", Repo
+  
+  desc "reviews", "manage github reviews"
+  subcommand "reviews", Reviews
   
   desc "pull_requests", "Refresh pull requests"
   def pull_requests
