@@ -9,28 +9,13 @@ require_relative 'lib/commands/pull_requests/refresh'
 require_relative 'lib/commands/users/users'
 require_relative 'lib/commands/repos/repo'
 require_relative 'lib/commands/reviews/reviews'
+require_relative 'lib/commands/contributions/contributions'
 
 class GHCC < Thor
   def self.exit_on_failure?
     true
   end
   # class_option :verbose, :type => :boolean
-
-  desc "contributions", "Get contributions from user(s)"
-  method_option :start_date,
-                :type => :string, default: "#{Date.today - 14}",
-                :desc => "First date to start counting contributions"
-  method_option :end_date,
-                :type => :string,
-                default: "#{Date.today}",
-                :desc => "Last date to count contributions"
-  def contributions
-    start_date = Date.parse(options[:start_date])
-    end_date = Date.parse(options[:end_date])
-    get_connection do |db|
-      get_contributions(db, start_date, end_date)
-    end
-  end
 
   desc "commits", "Adds commits to contributions"
   method_option :repo,
@@ -44,6 +29,8 @@ class GHCC < Thor
       refresh_commits(db, repo, logger)
     end
   end
+  desc "contributions", "get user contributions"
+  subcommand "contributions", Contributions
   
   desc "users", "manage github users"
   subcommand "users", Users

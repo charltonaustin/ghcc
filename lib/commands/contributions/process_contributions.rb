@@ -3,7 +3,8 @@ require 'csv'
 require_relative 'repository'
 require_relative '../repository'
 
-def print_results(user_contributions)
+def print_results(start_date, end_date, user_contributions)
+  puts "start_date: #{start_date}, end_date: #{end_date}"
   user_contributions.each do |_, data|
     commits = data[0][:commits]
     prs = data[0][:pull_requests]
@@ -15,10 +16,8 @@ def print_results(user_contributions)
     puts "#{name}: total: #{commits.size + prs.size + reviews.size}, "+
            "commits: #{commits.size}, prs: #{prs.size}. reviews: #{reviews.size}"
   end
-
 end
 def get_contributions(db, start_date, end_date)
-  puts "start_date: #{start_date}, end_date: #{end_date}"
   user_contributions = {}
   users = get_users_to_process(db)
   users.each do |user|
@@ -29,8 +28,5 @@ def get_contributions(db, start_date, end_date)
   user_contributions = user_contributions.sort_by do |_, data|
     data[0][:commits].size + data[0][:pull_requests].size + data[0][:reviews].size
   end
-  print_results(user_contributions)
+  print_results(start_date, end_date, user_contributions)
 end
-
-
-
