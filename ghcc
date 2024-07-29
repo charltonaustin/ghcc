@@ -29,16 +29,16 @@ class GHCC < Thor
       refresh_commits(db, repo, logger)
     end
   end
-  desc "contributions", "get user contributions"
+  desc "contributions", "Get user contributions"
   subcommand "contributions", Contributions
   
-  desc "users", "manage github users"
+  desc "users", "Manage github users"
   subcommand "users", Users
   
-  desc "repos", "manage github repositories"
+  desc "repos", "Manage github repositories"
   subcommand "repos", Repo
   
-  desc "reviews", "manage github reviews"
+  desc "reviews", "Manage github reviews"
   subcommand "reviews", Reviews
   
   desc "pull_requests", "Refresh pull requests"

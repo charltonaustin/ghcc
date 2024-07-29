@@ -36,7 +36,7 @@ class Users < Thor
   end
 
   desc "toggle", "Toggle to_process on a user"
-  method_option :username, aliases: "un",
+  method_option :username, aliases: "u",
                 :type => :string,
                 :desc => "User name of the user"
   method_option :name, aliases: "n",
