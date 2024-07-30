@@ -20,13 +20,14 @@ class GHCC < Thor
   desc "commits", "Adds commits to contributions"
   method_option :repo,
                 :type => :string,
-                default: "kin/report-service",
+                default: "charltonaustin/ghcc",
                 :desc => "Name of the repository you want to get commits for"
   def commits
     logger = get_logger
     repo = options[:repo]
     get_connection do |db|
-      refresh_commits(db, repo, logger)
+      output = refresh_commits(db, repo, logger)
+      puts "refreshed #{output.size} commits in #{repo}"
     end
   end
   desc "contributions", "Get user contributions"

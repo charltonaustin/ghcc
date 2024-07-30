@@ -6,7 +6,7 @@ def refresh_commits(db, repo, logger)
   commits = client.list_commits("#{repo}")
   logger.debug("write commits")
 
-  commits.each do |commit|
+  commits.map do |commit|
     username = commit.commit.committer.name
     maybe_username = get_user_name(db, commit.commit.committer.name)
     if maybe_username

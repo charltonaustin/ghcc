@@ -23,3 +23,10 @@ After you install it you can simply run the command
 ```bash
 ghcc help
 ```
+
+## To do
+1. Update refresh users to work with saved orgs
+2. Update logging to work with -v
+3. Update logging to work with -vv
+4. Add in tests
+5. Refactor to use output
