@@ -10,6 +10,7 @@ require_relative 'lib/commands/users/users'
 require_relative 'lib/commands/repos/repo'
 require_relative 'lib/commands/reviews/reviews'
 require_relative 'lib/commands/contributions/contributions'
+require_relative 'lib/commands/development/dev'
 
 class GHCC < Thor
   def self.exit_on_failure?
@@ -30,6 +31,10 @@ class GHCC < Thor
       puts "refreshed #{output.size} commits in #{repo}"
     end
   end
+  
+  desc "dev", "dev commands"
+  subcommand "dev", Dev
+  
   desc "contributions", "Get user contributions"
   subcommand "contributions", Contributions
   
@@ -49,19 +54,6 @@ class GHCC < Thor
     logger = get_logger
     get_connection do |db|
       refresh_pull_requests(db, client, logger)
-    end
-  end
-  
-  desc "install", "Symlinks this file to /usr/local/bin"
-  def install
-    File.symlink(File.expand_path(__FILE__), "/usr/local/bin/#{File.basename(__FILE__)}")
-  end
-
-  desc "run_migrations", "Updates current data model"
-  def run_migrations
-    Sequel.extension :migration
-    get_connection do |db| 
-      Sequel::Migrator.run(db, "#{__dir__}/lib/migrations")
     end
   end
 end
