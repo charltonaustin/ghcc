@@ -24,11 +24,11 @@ def print_results(start_date, end_date, user_contributions, ignore_reviews)
   end
 end
 
-def get_contributions(db, start_date, end_date, ignore_reviews)
+def display_contributions(db, start_date, end_date, ignore_reviews)
   user_contributions = {}
   users = get_users_to_process(db)
   users.each do |user|
-    pull_requests = get_contributions_from_db(db, start_date, end_date, user[:user_name])
+    pull_requests = add_contributions(db, start_date, end_date, user[:user_name])
     user_contributions[user[:user_name]] = [pull_requests, user]
   end
 

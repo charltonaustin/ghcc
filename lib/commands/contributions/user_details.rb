@@ -37,7 +37,7 @@ def get_contributions_name(db, logger, start_date, end_date, name)
 end
 
 def get_contributions_uname(db, logger, start_date, end_date, uname)
-  contributions = get_contributions_from_db(db, start_date, end_date, uname)
+  contributions = add_contributions(db, start_date, end_date, uname)
   contributions[:user_name] = uname
   contributions
 end

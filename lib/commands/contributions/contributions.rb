@@ -52,7 +52,7 @@ class Contributions < Thor
     ignore_reviews = options[:ignore_reviews]
     
     get_connection do |db|
-      get_contributions(db, start_date, end_date, ignore_reviews)
+      display_contributions(db, start_date, end_date, ignore_reviews)
     end
   end
 end

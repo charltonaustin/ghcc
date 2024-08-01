@@ -5,11 +5,7 @@ require_relative 'refresh'
 require_relative 'toggle'
 
 class Users < Thor
-  desc "refresh", "Refresh users"
-  method_option :org, aliases: "o", 
-                :type => :string,
-                default: "kin",
-                :desc => "Name of the organization you want to get users for"
+  desc "refresh", "Refresh users with saved orgs"
   def refresh
     logger = get_logger
     client = get_client
