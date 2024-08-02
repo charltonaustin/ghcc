@@ -11,6 +11,7 @@ require_relative 'lib/commands/repos/repo'
 require_relative 'lib/commands/reviews/reviews'
 require_relative 'lib/commands/contributions/contributions'
 require_relative 'lib/commands/development/dev'
+require_relative 'lib/commands/orgs/orgs'
 
 class GHCC < Thor
   def self.exit_on_failure?
@@ -31,7 +32,9 @@ class GHCC < Thor
       puts "refreshed #{output.size} commits in #{repo}"
     end
   end
-  
+  desc "orgs", "Create new organizations"
+  subcommand "orgs", Orgs
+
   desc "dev", "dev commands"
   subcommand "dev", Dev
   
