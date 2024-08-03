@@ -3,7 +3,7 @@ Sequel.migration do
     create_table(:orgs) do
       primary_key :id
       TrueClass :to_process, default: false
-      String name
+      String :name
     end
   end
 

@@ -12,7 +12,8 @@ class Dev < Thor
   def run_migrations
     Sequel.extension :migration
     get_connection do |db|
-      Sequel::Migrator.run(db, "#{__dir__}/lib/migrations")
+      puts File.expand_path("#{__dir__}/../../migrations")
+      Sequel::Migrator.run(db, File.expand_path("#{__dir__}/../../migrations"))
     end
   end
 end
