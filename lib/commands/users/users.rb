@@ -9,9 +9,12 @@ class Users < Thor
   def refresh
     logger = get_logger
     client = get_client
-    org = options[:org]
     get_connection do |db|
-      refresh_github_users(db, org, client, logger)
+      orgs = get_orgs(db)
+      orgs.each do |org|
+        logger.debug("Getting users for org: #{org}")
+        refresh_github_users(db, org, client, logger)
+      end
     end
   end
 
