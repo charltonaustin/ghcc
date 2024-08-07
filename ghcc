@@ -50,7 +50,7 @@ class GHCC < Thor
   desc "reviews", "Manage github reviews"
   subcommand "reviews", Reviews
   
-  desc "pull_requests", "Refresh pull requests"
+  desc "prs", "Refresh pull requests"
   def pull_requests
     client = get_client
     client.auto_paginate = false

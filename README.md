@@ -10,7 +10,7 @@ It needs to have the right permissions to get the information.
 
 ## To run tests
 ```bash
-bundle exec rspec  --pattern **/*_spec.rb 
+bundle exec turbo_tests **/*_spec.rb --format documentation 
 ```
 
 ## CLI Commands
