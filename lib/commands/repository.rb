@@ -11,3 +11,7 @@ end
 def get_repos_to_process(db)
   db["SELECT * FROM repos WHERE to_process = true"].all
 end
+
+def get_orgs(db)
+  db["SELECT * FROM orgs WHERE to_process = true"].all
+end

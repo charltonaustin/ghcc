@@ -21,6 +21,3 @@ def toggle_by_name(db, logger, name)
   logger.debug("to_process: #{to_process}")
   db["UPDATE users SET to_process = ? WHERE name = ?", (not to_process), name].update
 end
-def get_orgs(db)
-  db["SELECT * FROM orgs WHERE to_process = true"].all
-end
