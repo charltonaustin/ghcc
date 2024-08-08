@@ -30,3 +30,5 @@ ghcc help
 3. Update logging to work with -vv
 4. Add in tests
 5. Refactor to use output
+6. Make all parameters consistently key: value
+7. Update queries to use proper templating.

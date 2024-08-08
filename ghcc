@@ -51,7 +51,7 @@ class GHCC < Thor
   subcommand "reviews", Reviews
   
   desc "prs", "Refresh pull requests"
-  def pull_requests
+  def prs
     client = get_client
     client.auto_paginate = false
     logger = get_logger
