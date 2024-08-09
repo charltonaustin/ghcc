@@ -1,8 +1,8 @@
 require_relative 'repository'
 
 def print_details(logger, start_date, end_date, user_contributions, ignore_reviews)
-  # logger.debug("user_contributions: #{user_contributions}")
-  puts "start_date: #{start_date}, end_date: #{end_date}"
+  logger.debug("user_contributions: #{user_contributions}")
+  logger.debug("start_date: #{start_date}, end_date: #{end_date}")
   commits = user_contributions[:commits]
   commit_urls = commits.map { |c| "#{c[:url]}, #{c[:creation].strftime('%Y-%m-%d')}" }
   prs = user_contributions[:pull_requests]

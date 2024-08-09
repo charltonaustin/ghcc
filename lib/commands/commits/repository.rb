@@ -4,7 +4,3 @@ def save_commit(db, creation, user_name, repository, url)
      creation, user_name, repository, url].insert
 end
 
-def get_user_name(db, name)
-  ds = db["select user_name from users where name = ?", name]
-  ds.first[:user_name] unless ds.empty?
-end

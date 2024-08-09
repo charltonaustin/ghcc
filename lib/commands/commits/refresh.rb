@@ -1,5 +1,6 @@
 require_relative '../../shared/github_client'
 require_relative 'repository'
+require_relative '../repository'
 
 def refresh_commits(db, repo, logger)
   client = get_client
