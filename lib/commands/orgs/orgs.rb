@@ -1,10 +1,10 @@
 # frozen_string_literal: true
-require "thor"
+
+require 'thor'
 require_relative 'add'
 
 class Orgs < Thor
-
-  desc "add NAME", "Add in a new org with the name NAME"
+  desc 'add NAME', 'Add in a new org with the name NAME'
 
   def add(name)
     logger = get_logger
@@ -14,7 +14,8 @@ class Orgs < Thor
     end
   end
 
-  desc "toggle NAME", "Toggle to_process on org with name NAME"
+  desc 'toggle NAME', 'Toggle to_process on org with name NAME'
+
   def toggle(name)
     puts "Toggle org #{name}"
   end

@@ -1,10 +1,12 @@
 #!/usr/bin/env ruby
-require "thor"
-require "sequel"
-require_relative "lib/commands/contributions/process_contributions"
-require_relative "lib/commands/commits/refresh"
-require_relative "lib/shared/database"
-require_relative "lib/shared/logger"
+# frozen_string_literal: true
+
+require 'thor'
+require 'sequel'
+require_relative 'lib/commands/contributions/process_contributions'
+require_relative 'lib/commands/commits/refresh'
+require_relative 'lib/shared/database'
+require_relative 'lib/shared/logger'
 require_relative 'lib/commands/pull_requests/refresh'
 require_relative 'lib/commands/users/users'
 require_relative 'lib/commands/repos/repo'
@@ -19,11 +21,11 @@ class GHCC < Thor
   end
   # class_option :verbose, :type => :boolean
 
-  desc "commits", "Adds commits to contributions"
+  desc 'commits', 'Adds commits to contributions'
   method_option :repo,
-                :type => :string,
-                default: "charltonaustin/ghcc",
-                :desc => "Name of the repository you want to get commits for"
+                type: :string,
+                default: 'charltonaustin/ghcc',
+                desc: 'Name of the repository you want to get commits for'
   def commits
     logger = get_logger
     repo = options[:repo]
@@ -32,27 +34,27 @@ class GHCC < Thor
       puts "refreshed #{output.size} commits in #{repo}"
     end
   end
-  desc "orgs", "Create new organizations"
-  subcommand "orgs", Orgs
+  desc 'orgs', 'Create new organizations'
+  subcommand 'orgs', Orgs
 
-  desc "dev", "dev commands"
-  subcommand "dev", Dev
-  
-  desc "contributions", "Get user contributions"
-  subcommand "contributions", Contributions
-  
-  desc "users", "Manage github users"
-  subcommand "users", Users
-  
-  desc "repos", "Manage github repositories"
-  subcommand "repos", Repo
-  
-  desc "reviews", "Manage github reviews"
-  subcommand "reviews", Reviews
-  
-  desc "prs", "Refresh pull requests"
+  desc 'dev', 'dev commands'
+  subcommand 'dev', Dev
+
+  desc 'contributions', 'Get user contributions'
+  subcommand 'contributions', Contributions
+
+  desc 'users', 'Manage github users'
+  subcommand 'users', Users
+
+  desc 'repos', 'Manage github repositories'
+  subcommand 'repos', Repo
+
+  desc 'reviews', 'Manage github reviews'
+  subcommand 'reviews', Reviews
+
+  desc 'prs', 'Refresh pull requests'
   def prs
-    client = get_client
+    client = git_client
     client.auto_paginate = false
     logger = get_logger
     get_connection do |db|

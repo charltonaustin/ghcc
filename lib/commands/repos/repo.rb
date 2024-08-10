@@ -1,25 +1,29 @@
 # frozen_string_literal: true
-require "thor"
+
+require 'thor'
 require_relative 'list'
 require_relative 'add'
 require_relative 'toggle'
+
 class Repo < Thor
-  desc "list", "List all repos"
+  desc 'list', 'List all repos'
+
   def list
     get_connection do |db|
       list_repos(db)
     end
   end
-  
-  method_option :name, aliases: "n",
-                :type => :string,
-                :required => true,
-                :desc => "Name of the repository to add"
-  method_option :org, aliases: "o",
-                :type => :string,
-                :required => true,
-                :desc => "Owner of the repository to add"
-  desc "add", "Add a repo"
+
+  method_option :name, aliases: 'n',
+                       type: :string,
+                       required: true,
+                       desc: 'Name of the repository to add'
+  method_option :org, aliases: 'o',
+                      type: :string,
+                      required: true,
+                      desc: 'Owner of the repository to add'
+  desc 'add', 'Add a repo'
+
   def add
     name = options[:name]
     org = options[:org]
@@ -28,15 +32,16 @@ class Repo < Thor
     end
   end
 
-  method_option :name, aliases: "n",
-                :type => :string,
-                :required => true,
-                :desc => "Name of the repository to add"
-  method_option :org, aliases: "o",
-                :type => :string,
-                :required => true,
-                :desc => "Owner of the repository to add"
-  desc "toggle", "Toggle whether or not to use the repo in processing"
+  method_option :name, aliases: 'n',
+                       type: :string,
+                       required: true,
+                       desc: 'Name of the repository to add'
+  method_option :org, aliases: 'o',
+                      type: :string,
+                      required: true,
+                      desc: 'Owner of the repository to add'
+  desc 'toggle', 'Toggle whether or not to use the repo in processing'
+
   def toggle
     name = options[:name]
     org = options[:org]

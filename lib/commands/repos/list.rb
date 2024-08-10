@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'repository'
 
 def list_repos(db)

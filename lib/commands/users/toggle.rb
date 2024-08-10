@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'repository'
 
 def toggle_user(db, logger, user_name, name)
@@ -5,8 +7,8 @@ def toggle_user(db, logger, user_name, name)
     logger.debug("toggle user_name: #{user_name}")
     return toggle_by_username(db, logger, user_name)
   end
-  if name
-    logger.debug("toggle name: #{name}")
-    toggle_by_name(db, logger, name)
-  end
+  return unless name
+
+  logger.debug("toggle name: #{name}")
+  toggle_by_name(db, logger, name)
 end
