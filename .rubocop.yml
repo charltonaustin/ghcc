@@ -1,7 +1,7 @@
 require:
   - rubocop-rspec
   - rubocop-sequel
-Documentation:
+Style/Documentation:
   Enabled: false
 Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true

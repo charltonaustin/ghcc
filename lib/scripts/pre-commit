@@ -1,0 +1,3 @@
+cp ./lib/scripts/pre-commit ./.git/hooks/
+ls
+./lib/scripts/ci
