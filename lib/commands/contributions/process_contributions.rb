@@ -3,7 +3,7 @@
 require 'date'
 require 'csv'
 require_relative 'repository'
-require_relative '../repository'
+require_relative '../read_repository'
 
 def reviews(ignore_reviews, reviews)
   review_string = " reviews: #{reviews.size},"
@@ -16,17 +16,18 @@ def reviews(ignore_reviews, reviews)
 end
 
 def names(data)
-  commits = data[0][:commits]
-  prs = data[0][:pull_requests]
-  reviews = data[0][:reviews]
-  name = data[1][:name]
-  name = data[1][:user_name] if name.nil?
+  commits = data[1][0][:commits]
+  prs = data[1][0][:pull_requests]
+  reviews = data[1][0][:reviews]
+  name = data[1][1][:name]
+  name = data[1][1][:user_name] if name.nil?
   [commits, name, prs, reviews]
 end
 
-def print_results(start_date, end_date, user_contributions, ignore_reviews)
+def print_results(logger, start_date, end_date, user_contributions, ignore_reviews)
   puts "start_date: #{start_date}, end_date: #{end_date}"
-  user_contributions.each_value do |data|
+  user_contributions.each do |data|
+    logger.debug("data: #{data}")
     commits, name, prs, reviews = names(data)
     review_string, size = reviews(ignore_reviews, reviews)
     puts "#{name}: total: #{commits.size + prs.size + size}, " +
@@ -47,7 +48,7 @@ def pr_values(db, end_date, start_date, user_contributions, users)
   end
 end
 
-def display_contributions(db, start_date, end_date, ignore_reviews)
+def display_contributions(db, logger, start_date, end_date, ignore_reviews)
   user_contributions = {}
   users = get_users_to_process(db)
   pr_values(db, end_date, start_date, user_contributions, users)
@@ -55,5 +56,5 @@ def display_contributions(db, start_date, end_date, ignore_reviews)
   user_contributions = user_contributions.sort_by do |_, data|
     review_values(data, ignore_reviews)
   end
-  print_results(start_date, end_date, user_contributions, ignore_reviews)
+  print_results(logger, start_date, end_date, user_contributions, ignore_reviews)
 end

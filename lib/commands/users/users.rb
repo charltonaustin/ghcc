@@ -3,7 +3,6 @@
 require 'thor'
 require_relative 'list'
 require_relative 'refresh'
-require_relative '../repository'
 require_relative 'toggle'
 
 class Users < Thor

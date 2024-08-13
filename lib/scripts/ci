@@ -1,1 +1,4 @@
-rubocop -A
+#!/bin/zsh
+
+bundle exec rubocop -A
+bundle exec turbo_tests ./**/*_spec.rb --format documentation

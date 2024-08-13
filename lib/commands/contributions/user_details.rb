@@ -32,8 +32,8 @@ def log_details(end_date, logger, start_date, user_contributions)
   logger.debug("start_date: #{start_date}, end_date: #{end_date}")
 end
 
-def calculate_review_string(ignore_reviews, reviews, reviews_urls)
-  review_string = "\nreviews: #{reviews.size}\n#{reviews_urls.join("\n")}"
+def calculate_review_string(ignore_reviews, reviews_urls)
+  review_string = "\nreviews: #{reviews_urls.size}\n#{reviews_urls.join("\n")}"
   review_string = '' if ignore_reviews
   review_string
 end
@@ -46,14 +46,14 @@ def calculate(ignore_reviews, user_contributions)
   commit_urls, prs_urls, reviews_urls = map_contributions(user_contributions)
   name = name(user_contributions)
   review_string = calculate_review_string(ignore_reviews, reviews_urls)
-  [commit_urls, name, prs_urls, review_string]
+  [commit_urls, name, prs_urls, reviews_urls, review_string]
 end
 
 def print_details(logger, start_date, end_date, user_contributions, ignore_reviews)
   log_details(end_date, logger, start_date, user_contributions)
-  commit_urls, name, prs_urls, review_string = calculate(ignore_reviews, user_contributions)
+  commit_urls, name, prs_urls, review_urls, review_string = calculate(ignore_reviews, user_contributions)
 
-  puts "#{name}\ntotal: #{commits.size + prs.size + reviews.size}" + review_string +
+  puts "#{name}\ntotal: #{commit_urls.size + prs_urls.size + review_urls.size}" + review_string +
        print_string_for('commits', commit_urls) +
        print_string_for('prs', prs_urls)
 end
@@ -83,4 +83,13 @@ def user_details(db, logger, start_date, end_date, uname, name, ignore_reviews)
   return if user_contributions.nil?
 
   print_details(logger, start_date, end_date, user_contributions, ignore_reviews)
+end
+
+def options_for_details(options)
+  username = options[:username]
+  name = options[:name]
+  ignore_reviews = options[:ignore_reviews]
+  start_date = Date.parse(options[:start_date])
+  end_date = Date.parse(options[:end_date])
+  [end_date, ignore_reviews, name, start_date, username]
 end

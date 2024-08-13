@@ -13,12 +13,12 @@ class Reviews < Thor
                 desc: 'Last date to count contributions'
 
   def refresh
-    get_logger
+    logger = get_logger
     start_date = Date.parse(options[:start_date])
     end_date = Date.parse(options[:end_date])
     client = git_client
     get_connection do |db|
-      refresh_reviews(db, client, start_date, end_date)
+      ReviewsModule.refresh(db, client, logger, start_date, end_date)
     end
   end
 end

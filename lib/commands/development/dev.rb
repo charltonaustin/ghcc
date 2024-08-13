@@ -6,7 +6,8 @@ class Dev < Thor
   desc 'install', 'Symlinks this file to /usr/local/bin'
 
   def install
-    File.symlink(File.expand_path(__FILE__), "/usr/local/bin/#{File.basename(__FILE__)}")
+    ghcc_path = File.expand_path("#{__FILE__}/../../../../ghcc")
+    File.symlink(ghcc_path, "/usr/local/bin/#{File.basename(ghcc_path)}")
   end
 
   desc 'run_migrations', 'Updates current data model'

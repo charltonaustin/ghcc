@@ -2,6 +2,8 @@
 # frozen_string_literal: true
 
 require 'thor'
+require 'fylla'
+require 'cli'
 require 'sequel'
 require_relative 'lib/commands/contributions/process_contributions'
 require_relative 'lib/commands/commits/refresh'
@@ -16,16 +18,24 @@ require_relative 'lib/commands/development/dev'
 require_relative 'lib/commands/orgs/orgs'
 
 class GHCC < Thor
+  class_option :verbose, type: :boolean, aliases: :v
+
   def self.exit_on_failure?
     true
   end
-  # class_option :verbose, :type => :boolean
+
+  desc 'gc', 'generate completions'
+
+  def gc
+    File.write(File.expand_path("~/.oh-my-zsh/completions/_#{File.basename(__FILE__)}"), Fylla.zsh_completion(self))
+  end
 
   desc 'commits', 'Adds commits to contributions'
   method_option :repo,
                 type: :string,
                 default: 'charltonaustin/ghcc',
                 desc: 'Name of the repository you want to get commits for'
+
   def commits
     logger = get_logger
     repo = options[:repo]
@@ -34,6 +44,7 @@ class GHCC < Thor
       puts "refreshed #{output.size} commits in #{repo}"
     end
   end
+
   desc 'orgs', 'Create new organizations'
   subcommand 'orgs', Orgs
 
@@ -53,6 +64,7 @@ class GHCC < Thor
   subcommand 'reviews', Reviews
 
   desc 'prs', 'Refresh pull requests'
+
   def prs
     client = git_client
     client.auto_paginate = false
@@ -63,4 +75,5 @@ class GHCC < Thor
   end
 end
 
+Fylla.load(File.basename(__FILE__).to_s)
 GHCC.start(ARGV)

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'repository'
-require_relative '../repository'
+require_relative '../read_repository'
 
 def update_pull_requests(client, db, logger, repository_name)
   logger.debug('no prs saved getting them all')

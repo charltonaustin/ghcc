@@ -2,7 +2,7 @@
 
 require_relative '../../shared/github_client'
 require_relative 'repository'
-require_relative '../repository'
+require_relative '../read_repository'
 
 def log_commits(commit, display_name, logger, repo)
   logger.debug("date: #{commit.commit.author.date}")

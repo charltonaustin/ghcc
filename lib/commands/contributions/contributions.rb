@@ -24,21 +24,12 @@ class Contributions < Thor
                                  desc: 'Ignore review contributions'
 
   def details
-    end_date, ignore_reviews, name, start_date, username = options_for_details
+    end_date, ignore_reviews, name, start_date, username = options_for_details(options)
     get_connection do |db|
       logger = get_logger
       logger.debug('got connection running user_details')
       user_details(db, logger, start_date, end_date, username, name, ignore_reviews)
     end
-  end
-
-  def options_for_details
-    username = options[:username]
-    name = options[:name]
-    ignore_reviews = options[:ignore_reviews]
-    start_date = Date.parse(options[:start_date])
-    end_date = Date.parse(options[:end_date])
-    [end_date, ignore_reviews, name, start_date, username]
   end
 
   desc 'all', 'Get contributions from user(s)'
@@ -55,12 +46,13 @@ class Contributions < Thor
                                  desc: 'Ignore review contributions'
 
   def all
+    logger = get_logger
     start_date = Date.parse(options[:start_date])
     end_date = Date.parse(options[:end_date])
     ignore_reviews = options[:ignore_reviews]
 
     get_connection do |db|
-      display_contributions(db, start_date, end_date, ignore_reviews)
+      display_contributions(db, logger, start_date, end_date, ignore_reviews)
     end
   end
 end
