@@ -28,8 +28,3 @@ ghcc help
 ## To do
 1. Add in tests
 2. Add in github build
-3. Update refresh users to work with saved orgs
-4. Update logging to work with -v
-5. Update logging to work with -vv
-6. Refactor to use output
-7. Make all parameters consistently key: value

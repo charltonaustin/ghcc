@@ -2,8 +2,16 @@
 
 require 'logger'
 
-def get_logger(level = Logger::DEBUG)
+def get_level_from_options(options)
+  if options.key? :v
+    Logger::DEBUG
+  else
+    Logger::ERROR
+  end
+end
+
+def get_logger(options = {})
   logger = Logger.new($stdout)
-  logger.level = level
+  logger.level = get_level_from_options(options)
   logger
 end

@@ -6,8 +6,8 @@ require_relative '../../shared/database'
 require 'securerandom'
 
 def call_toggle_twice(db)
-  toggle_by_username(db, double('logger').as_null_object, 'user_name')
-  toggle_by_username(db, double('logger').as_null_object, 'user_name')
+  Users::Repository.toggle_by_username(db, double('logger').as_null_object, 'user_name')
+  Users::Repository.toggle_by_username(db, double('logger').as_null_object, 'user_name')
 end
 
 RSpec.describe 'users/repository', type: 'database' do
@@ -29,25 +29,25 @@ RSpec.describe 'users/repository', type: 'database' do
 
   it 'saves a user in an idempotent way' do
     get_connection(db_name) do |db|
-      save_user_name(db, 'user_name', 'name')
-      save_user_name(db, 'user_name', 'name')
-      expect(get_users(db).size).to eq(1)
+      Users::Repository.save_user_name(db, 'user_name', 'name')
+      Users::Repository.save_user_name(db, 'user_name', 'name')
+      expect(Users::Repository.get_users(db).size).to eq(1)
     end
   end
 
   it 'toggles a user to false' do
     get_connection(db_name) do |db|
-      save_user_name(db, 'user_name', 'name')
-      toggle_by_username(db, double('logger').as_null_object, 'user_name')
-      expect(get_users(db)[0][:to_process]).to be(true)
+      Users::Repository.save_user_name(db, 'user_name', 'name')
+      Users::Repository.toggle_by_username(db, double('logger').as_null_object, 'user_name')
+      expect(Users::Repository.get_users(db)[0][:to_process]).to be(true)
     end
   end
 
   it 'toggles a user to true' do
     get_connection(db_name) do |db|
-      save_user_name(db, 'user_name', 'name')
+      Users::Repository.save_user_name(db, 'user_name', 'name')
       call_toggle_twice(db)
-      expect(get_users(db)[0][:to_process]).to be(false)
+      expect(Users::Repository.get_users(db)[0][:to_process]).to be(false)
     end
   end
 end

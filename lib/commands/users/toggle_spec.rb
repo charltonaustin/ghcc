@@ -8,31 +8,31 @@ RSpec.describe 'toggle_user' do
   let(:logger) { double('logger').as_null_object }
 
   before do
-    allow(self).to receive(:toggle_by_username)
-    allow(self).to receive(:toggle_by_name)
+    allow(Users::Repository).to receive(:toggle_by_username)
+    allow(Users::Repository).to receive(:toggle_by_name)
   end
 
   it 'calls toggle_by_username when username given' do
     toggle_user(db, logger, 'username', nil)
 
-    expect(self).to have_received(:toggle_by_username).exactly(1).times.with(db, logger, 'username')
+    expect(Users::Repository).to have_received(:toggle_by_username).exactly(1).times.with(db, logger, 'username')
   end
 
   it 'calls toggle_by_username when username and Name given' do
     toggle_user(db, logger, 'username', 'Name')
 
-    expect(self).to have_received(:toggle_by_username).exactly(1).times.with(db, logger, 'username')
+    expect(Users::Repository).to have_received(:toggle_by_username).exactly(1).times.with(db, logger, 'username')
   end
 
   it 'calls toggle_by_name when no username given' do
     toggle_user(db, logger, nil, 'Name')
 
-    expect(self).to have_received(:toggle_by_name).exactly(1).times.with(db, logger, 'Name')
+    expect(Users::Repository).to have_received(:toggle_by_name).exactly(1).times.with(db, logger, 'Name')
   end
 
   it 'does not call toggle_by_name when username given' do
     toggle_user(db, logger, 'username', 'Name')
 
-    expect(self).to have_received(:toggle_by_name).exactly(0).times
+    expect(Users::Repository).to have_received(:toggle_by_name).exactly(0).times
   end
 end

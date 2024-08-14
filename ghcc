@@ -10,15 +10,15 @@ require_relative 'lib/commands/commits/refresh'
 require_relative 'lib/shared/database'
 require_relative 'lib/shared/logger'
 require_relative 'lib/commands/pull_requests/refresh'
-require_relative 'lib/commands/users/users'
-require_relative 'lib/commands/repos/repo'
-require_relative 'lib/commands/reviews/reviews'
-require_relative 'lib/commands/contributions/contributions'
-require_relative 'lib/commands/development/dev'
-require_relative 'lib/commands/orgs/orgs'
+require_relative 'lib/commands/users/command'
+require_relative 'lib/commands/repos/command'
+require_relative 'lib/commands/reviews/command'
+require_relative 'lib/commands/contributions/command'
+require_relative 'lib/commands/dev/command'
+require_relative 'lib/commands/orgs/command'
 
 class GHCC < Thor
-  class_option :verbose, type: :boolean, aliases: :v
+  class_option :v, type: :boolean
 
   def self.exit_on_failure?
     true
@@ -37,7 +37,7 @@ class GHCC < Thor
                 desc: 'Name of the repository you want to get commits for'
 
   def commits
-    logger = get_logger
+    logger = get_logger(options)
     repo = options[:repo]
     get_connection do |db|
       output = refresh_commits(db, repo, logger)
@@ -46,22 +46,22 @@ class GHCC < Thor
   end
 
   desc 'orgs', 'Create new organizations'
-  subcommand 'orgs', Orgs
+  subcommand 'orgs', Orgs::Command
 
   desc 'dev', 'dev commands'
-  subcommand 'dev', Dev
+  subcommand 'dev', Dev::Command
 
   desc 'contributions', 'Get user contributions'
-  subcommand 'contributions', Contributions
+  subcommand 'contributions', Contributions::Command
 
   desc 'users', 'Manage github users'
-  subcommand 'users', Users
+  subcommand 'users', Users::Command
 
   desc 'repos', 'Manage github repositories'
-  subcommand 'repos', Repo
+  subcommand 'repos', Repos::Command
 
   desc 'reviews', 'Manage github reviews'
-  subcommand 'reviews', Reviews
+  subcommand 'reviews', Reviews::Command
 
   desc 'prs', 'Refresh pull requests'
 
@@ -76,4 +76,8 @@ class GHCC < Thor
 end
 
 Fylla.load(File.basename(__FILE__).to_s)
-GHCC.start(ARGV)
+trap('SIGINT') { throw :ctrl_c }
+
+catch :ctrl_c do
+  GHCC.start(ARGV)
+end

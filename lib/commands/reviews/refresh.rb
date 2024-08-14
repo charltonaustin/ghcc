@@ -2,7 +2,7 @@
 
 require_relative '../read_repository'
 require_relative 'repository'
-module ReviewsModule
+module Reviews
   def self.refresh(db, client, logger, start_date, end_date)
     pull_requests = get_pull_requests_for_reviews(db, start_date, end_date)
     reviews = []

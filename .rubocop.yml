@@ -215,6 +215,8 @@ RSpec/VerifiedDoubles:
   Enabled: false
 RSpec/DescribeClass:
   Enabled: false
+RSpec/VerifiedDoubleReference:
+  Enabled: false
   
 # TODO: Fix these
 Metrics/ParameterLists:

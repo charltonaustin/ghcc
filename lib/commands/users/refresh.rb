@@ -8,6 +8,6 @@ def refresh_github_users(db, org_name, client, logger)
     user = client.user(member.login)
     logger.debug("User: #{member.login}")
     logger.debug("Name: #{user.name}")
-    save_user_name(db, member.login, user.name)
+    Users::Repository.save_user_name(db, member.login, user.name)
   end
 end
