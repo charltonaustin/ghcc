@@ -24,6 +24,7 @@ def add_pull_requests(db, start_date, end_date, user_name, map)
   pull_requests = db['SELECT * FROM pull_requests ' \
                      'WHERE user_name = ? AND pr_creation BETWEEN ? AND ?',
                      user_name, start_date, end_date].all
+
   map[:pull_requests] = pull_requests
   map
 end

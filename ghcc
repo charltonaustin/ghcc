@@ -68,9 +68,10 @@ class GHCC < Thor
   def prs
     client = git_client
     client.auto_paginate = false
-    logger = get_logger
+    logger = get_logger(options)
     get_connection do |db|
-      refresh_pull_requests(db, client, logger)
+      logger.debug('running refresh_pull_requests')
+      PRS.refresh_pull_requests(db, client, logger)
     end
   end
 end
