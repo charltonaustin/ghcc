@@ -52,7 +52,7 @@ module Users
       name = options[:name]
       get_connection do |db|
         logger.debug('got connection running toggle_user')
-        Users.toggle_user(db, logger, username, name)
+        Users.toggle(db, logger, username, name)
       end
     end
   end
