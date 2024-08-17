@@ -28,3 +28,5 @@ ghcc help
 ## To do
 1. Add in tests
 2. Add in github build
+3. Automatic refresh of pull requests, reviews, and commits
+4. Make commits associated with a pr not double counted

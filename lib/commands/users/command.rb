@@ -16,7 +16,7 @@ module Users
         orgs = get_orgs(db)
         orgs.each do |org|
           logger.debug("Getting users for org: #{org}")
-          refresh_github_users(db, org[:name], client, logger)
+          Users.refresh(db, org[:name], client, logger)
         end
       end
     end
@@ -34,7 +34,7 @@ module Users
       search = options[:search]
       to_process = options[:to_process]
       get_connection do |db|
-        List.list_users_from(db, search, to_process)
+        Users::List.list_users_from(db, search, to_process)
       end
     end
 
@@ -52,7 +52,7 @@ module Users
       name = options[:name]
       get_connection do |db|
         logger.debug('got connection running toggle_user')
-        toggle_user(db, logger, username, name)
+        Users.toggle_user(db, logger, username, name)
       end
     end
   end

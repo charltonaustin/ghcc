@@ -32,11 +32,11 @@ module Reviews
     review.each do |r|
       logger.debug("review: #{r}")
 
-      already_saved = ReviewsRepository.check_for(db, r[:html_url])
+      already_saved = Reviews.check_for(db, r[:html_url])
       logger.debug('review saved') if already_saved
       next if already_saved
 
-      ReviewsRepository.insert(db, r)
+      Reviews.insert(db, r)
     end
   end
 end

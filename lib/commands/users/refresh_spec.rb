@@ -6,13 +6,13 @@ require_relative 'refresh'
 RSpec.describe 'refresh_github_users' do
   it 'refresh should save as many time as users are returned' do
     clients, n = setup_multiple_users
-    refresh_github_users(double('db'), 'org name', clients, double('logger').as_null_object)
+    Users.refresh(double('db'), 'org name', clients, double('logger').as_null_object)
     expect(Users::Repository).to have_received(:save_user_name).exactly(n).times
   end
 
   it 'refresh should be called with the correct parameters' do
     client, db = setup
-    refresh_github_users(db, 'org name', client, double('logger').as_null_object)
+    Users.refresh(db, 'org name', client, double('logger').as_null_object)
     expect(Users::Repository).to have_received(:save_user_name).with(db, 'test_login', 'test name')
   end
 

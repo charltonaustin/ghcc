@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module ReviewsRepository
+module Reviews
   def self.insert(db, repo)
     db['INSERT INTO reviews (creation, user, repository, url) VALUES (?, ?, ?, ?)',
        repo[:submitted_at], repo[:user], repo[:repository], repo[:html_url]].insert
