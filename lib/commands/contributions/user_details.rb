@@ -27,9 +27,9 @@ def name(user_contributions)
   name
 end
 
-def log_details(end_date, logger, start_date, user_contributions)
+def log_details(logger, date_range, user_contributions)
   logger.debug("user_contributions: #{user_contributions}")
-  logger.debug("start_date: #{start_date}, end_date: #{end_date}")
+  logger.debug("start_date: #{date_range[:start_date]}, end_date: #{date_range[:end_date]}")
 end
 
 def calculate_review_string(ignore_reviews, reviews_urls)
@@ -49,8 +49,8 @@ def calculate(ignore_reviews, user_contributions)
   [commit_urls, name, prs_urls, reviews_urls, review_string]
 end
 
-def print_details(logger, start_date, end_date, user_contributions, ignore_reviews)
-  log_details(end_date, logger, start_date, user_contributions)
+def print_details(logger, date_range, user_contributions, ignore_reviews)
+  log_details(logger, date_range, user_contributions)
   commit_urls, name, prs_urls, review_urls, review_string = calculate(ignore_reviews, user_contributions)
 
   puts "#{name}\ntotal: #{commit_urls.size + prs_urls.size + review_urls.size}" + review_string +
@@ -58,31 +58,34 @@ def print_details(logger, start_date, end_date, user_contributions, ignore_revie
        print_string_for('prs', prs_urls)
 end
 
-def get_contributions_name(db, logger, start_date, end_date, name)
+def get_contributions_name(db, logger, date_range, name)
   logger.debug("QUERY IS: SELECT user_name FROM users WHERE name = '#{name}'")
   ds = db['SELECT user_name FROM users WHERE name = ?', name]
   logger.debug("ds.empty?: #{ds.empty?}")
   logger.debug("ds.first[:user_name]: #{ds.first[:user_name]}")
   uname = ds.first[:user_name] unless ds.empty?
   logger.debug("uname: #{uname}")
-  contributions = get_contributions_uname(db, logger, start_date, end_date, uname)
+  contributions = get_contributions_uname(db, logger, date_range, uname)
   contributions[:name] = name
   contributions
 end
 
-def get_contributions_uname(db, _logger, start_date, end_date, uname)
-  contributions = add_contributions(db, start_date, end_date, uname)
+def get_contributions_uname(db, _logger, date_range, uname)
+  contributions = add_contributions(db, date_range, uname)
   contributions[:user_name] = uname
   contributions
 end
 
-def user_details(db, logger, start_date, end_date, uname, name, ignore_reviews)
-  user_contributions = get_contributions_uname(db, logger, start_date, end_date, uname) unless uname.nil?
-  user_contributions = get_contributions_name(db, logger, start_date, end_date, name) unless name.nil?
+def user_details(app_context, date_range, uname, name, ignore_reviews)
+  unless uname.nil?
+    user_contributions = get_contributions_uname(app_context[:db], app_context[:logger], date_range,
+                                                 uname)
+  end
+  user_contributions = get_contributions_name(app_context[:db], app_context[:logger], date_range, name) unless name.nil?
 
   return if user_contributions.nil?
 
-  print_details(logger, start_date, end_date, user_contributions, ignore_reviews)
+  print_details(app_context[:logger], date_range, user_contributions, ignore_reviews)
 end
 
 def options_for_details(options)

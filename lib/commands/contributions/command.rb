@@ -28,7 +28,7 @@ module Contributions
       get_connection do |db|
         logger = get_logger(parent_options)
         logger.debug('got connection running user_details')
-        user_details(db, logger, start_date, end_date, username, name, ignore_reviews)
+        user_details({ db:, logger: }, { start_date:, end_date: }, username, name, ignore_reviews)
       end
     end
 

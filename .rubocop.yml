@@ -217,11 +217,3 @@ RSpec/DescribeClass:
   Enabled: false
 RSpec/VerifiedDoubleReference:
   Enabled: false
-  
-# TODO: Fix these
-Metrics/ParameterLists:
-  Exclude:
-    - lib/commands/pull_requests/read_repository.rb
-    - lib/commands/contributions/user_details.rb
-    - lib/commands/contributions/user_details.rb
-    - lib/commands/pull_requests/repository.rb

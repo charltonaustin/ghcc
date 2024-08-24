@@ -11,12 +11,12 @@ module PRS
     ds.first[:c].positive?
   end
 
-  private_class_method def self.save_pull_request(db, created_at, user_name, url, repo, number)
-    return unless db['SELECT * from pull_requests where url = ?', url].empty?
+  private_class_method def self.save_pull_request(db, pr_data, repo, number)
+    return unless db['SELECT * from pull_requests where url = ?', pr_data[:url]].empty?
 
     db[
       'INSERT INTO pull_requests (pr_creation, user_name, url, repository, number) VALUES (?, ?, ?, ?, ? )',
-      created_at, user_name, url, repo, number
+      pr_data[:created_at], pr_data[:user_name], pr_data[:url], repo, number
     ].insert
   end
 end

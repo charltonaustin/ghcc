@@ -23,16 +23,17 @@ module PRS
     pull_requests = client.pull_requests(repository_name, state: 'all', per_page: 100, page: 1)
     pull_requests.each do |pr|
       logger.debug("Saving pr #{pr.html_url}")
-      save_pull_request(db, pr.created_at, pr.user.login, pr.html_url, repository_name, pr.number)
+      save_pull_request(db, { created_at: pr.created_at, user_name: pr.user.login, url: pr.html_url }, repository_name,
+                        pr.number)
       number_needed -= 1
-      break if number_needed <= 0
+      return number_needed if number_needed <= 0
     end
   end
 
   private_class_method def self.get_remaining_pull_requests(client, db, logger, pull_request, repository_name)
     logger.debug('saving new prs')
     number_needed = pull_request[0].number - get_latest_pull_requests(db)[:number]
-    get_more_prs(client, db, logger, number_needed, repository_name) while number_needed.positive?
+    number_needed = get_more_prs(client, db, logger, number_needed, repository_name) while number_needed.positive?
   end
 
   private_class_method def self.check_if_saved(db, logger, repo)
