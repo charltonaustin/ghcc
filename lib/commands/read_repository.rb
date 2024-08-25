@@ -19,6 +19,6 @@ def get_orgs(db)
 end
 
 def get_user_name(db, name)
-  ds = db['select user_name from users where name = ?', name]
+  ds = db['SELECT user_name FROM users WHERE name = ?', name]
   ds.first[:user_name] unless ds.empty?
 end
