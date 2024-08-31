@@ -25,7 +25,7 @@ The basic flow is something like.
 ```shell
 $ ghcc orgs add <name>
 $ ghcc users refresh
-$ ghcc repos add -n <name> -o <org name>
+$ ghcc repos add -n <repo name> -o <org name>
 $ ghcc prs
 $ ghcc reviews refresh
 $ ghcc contributions all
@@ -49,7 +49,7 @@ See the lib/scripts file
 
 ### CLI Commands
 #### To run
-Before you install it cd to the directory and run the following: 
+Before you install it cd to the root directory and run the following: 
 ```sh
 ./ghcc install
 ```
@@ -60,6 +60,9 @@ ghcc help
 
 ### To do
 1. Add in tests
-2. Add in github build
+2. Add in github actions build
 3. Automatic refresh of pull requests, reviews, and commits
 4. Make commits associated with a pr not double counted
+   1. Pull commits for PRs
+   2. Update contributions from commits to check that they are not a part of a PR
+   3. Update commits to pull from to process on org or repo
