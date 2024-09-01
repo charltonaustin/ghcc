@@ -3,5 +3,5 @@
 require_relative 'repository'
 
 def toggle_repo(db, logger, org, name)
-  toggle_repository_by_(db, logger, org, name)
+  Repos.toggle_to_process(db, logger, org, name)
 end

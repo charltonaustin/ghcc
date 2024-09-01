@@ -3,7 +3,7 @@
 require_relative 'repository'
 
 def list_repos(db)
-  repos = list_repos_from(db)
+  repos = Repos.get_all(db)
   repos.each do |repo|
     puts repo
   end
