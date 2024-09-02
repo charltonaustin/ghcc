@@ -2,6 +2,8 @@
 
 module Reviews
   def self.insert(db, repo)
+    return if check_for(db, repo[:html_url])
+
     db['INSERT INTO reviews (creation, user, repository, url) VALUES (?, ?, ?, ?)',
        repo[:submitted_at], repo[:user], repo[:repository], repo[:html_url]].insert
   end
