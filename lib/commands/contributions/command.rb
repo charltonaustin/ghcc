@@ -52,7 +52,7 @@ module Contributions
       ignore_reviews = options[:ignore_reviews]
 
       get_connection do |db|
-        display_contributions(db, logger, start_date, end_date, ignore_reviews)
+        display_contributions(db, logger, { start_date:, end_date: }, ignore_reviews)
       end
     end
   end
