@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
 module PRS
-  private_class_method def self.get_latest_pull_requests(db)
-    ds = db['SELECT number FROM pull_requests ORDER BY pr_creation DESC LIMIT 1']
+  private_class_method def self.get_latest_pull_requests(db, repository_name)
+    ds = db['SELECT number FROM pull_requests WHERE repository = ? ORDER BY pr_creation DESC LIMIT 1',
+            repository_name]
     ds.first unless ds.empty?
   end
 

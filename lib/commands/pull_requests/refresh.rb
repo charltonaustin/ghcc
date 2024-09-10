@@ -32,7 +32,7 @@ module PRS
 
   private_class_method def self.get_remaining_pull_requests(client, db, logger, pull_request, repository_name)
     logger.debug('saving new prs')
-    number_needed = pull_request[0].number - get_latest_pull_requests(db)[:number]
+    number_needed = pull_request[0].number - get_latest_pull_requests(db, repository_name)[:number]
     number_needed = get_more_prs(client, db, logger, number_needed, repository_name) while number_needed.positive?
   end
 
@@ -44,8 +44,12 @@ module PRS
     [has_saved, repository_name]
   end
 
-  private_class_method def self.latest_pr?(db, pull_request)
-    get_latest_pull_requests(db)[:number] >= pull_request[0].number
+  private_class_method def self.latest_pr?(db, logger, pull_request, repo)
+    db_pr_number = get_latest_pull_requests(db, "#{repo[:organization]}/#{repo[:name]}")[:number]
+    latest_pr_number = pull_request[0].number
+    logger.debug("db_pr_number #{db_pr_number}")
+    logger.debug("latest_pr_number #{latest_pr_number}")
+    db_pr_number >= latest_pr_number
   end
 
   private_class_method def self.process_latest(client, repository_name)
@@ -61,10 +65,8 @@ module PRS
   private_class_method def self.process_loop(client, db, logger, repos)
     repos.each do |repo|
       has_saved, repository_name = process_saved(client, db, logger, repo)
-      next unless has_saved
-
       pull_request = process_latest(client, repository_name)
-      latest_pr = latest_pr?(db, pull_request)
+      latest_pr = latest_pr?(db, logger, pull_request, repo)
       logger.debug('no updates needed') if latest_pr
       next if latest_pr
 
