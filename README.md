@@ -59,10 +59,10 @@ ghcc help
 ```
 
 ### To do
-1. Add in tests
+1. Write tests
 2. Add in github actions build
-3. Automatic refresh of pull requests, reviews, and commits
-4. Make commits associated with a pr not double counted
-   1. Pull commits for PRs
-   2. Update contributions from commits to check that they are not a part of a PR
-   3. Update commits to pull from to process on org or repo
+3. Make commits associated with a pr not double counted
+    1. Pull commits for PRs
+    2. Update contributions from commits to check that they are not a part of a PR
+    3. Update commits to pull from to process on org or repo
+4. Automatic refresh of pull requests, reviews, and commits

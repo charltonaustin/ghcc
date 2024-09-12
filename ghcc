@@ -40,7 +40,7 @@ class GHCC < Thor
     logger = get_logger(options)
     repo = options[:repo]
     get_connection do |db|
-      output = refresh_commits(db, repo, logger)
+      output = refresh_commits(db, git_client, repo, logger)
       puts "refreshed #{output.size} commits in #{repo}"
     end
   end

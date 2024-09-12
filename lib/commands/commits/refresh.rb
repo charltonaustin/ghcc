@@ -18,9 +18,9 @@ def get_name(commit, db)
   display_name
 end
 
-def refresh_commits(db, repo, logger)
+def refresh_commits(db, client, repo, logger)
   logger.debug('write commits')
-  git_client.list_commits(repo.to_s).map do |commit|
+  client.list_commits(repo.to_s).map do |commit|
     display_name = get_name(commit, db)
     log_commits(commit, display_name, logger, repo)
     save_commit(db, commit.commit.author.date, display_name, repo, commit.html_url)
