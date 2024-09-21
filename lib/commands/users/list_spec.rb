@@ -12,5 +12,13 @@ RSpec.describe 'List' do
         Users::List.list_users_from(object_double('db').as_null_object, '', false)
       end.to output(/Username: username, name: name, to_process: false/).to_stdout
     end
+
+    it 'displays matched users' do
+      allow(Users::Repository).to receive(:get_users).and_return [{ user_name: 'username', name: 'name',
+                                                                    to_process: false }]
+      expect do
+        Users::List.list_users_from(object_double('db').as_null_object, 'name', false)
+      end.to output(/Username: username, name: name, to_process: false/).to_stdout
+    end
   end
 end
