@@ -14,7 +14,7 @@ module PRS
     pull_requests = client.pull_requests(repository_name, state: 'all')
     pull_requests.each do |pr|
       logger.debug("Saving pr #{pr.html_url}")
-      save_pull_request(db, pr.created_at, pr.user.login, pr.html_url, repository_name, pr.number)
+      save_pull_request(db, pr, repository_name, pr.number)
     end
     client.auto_paginate = false
   end
