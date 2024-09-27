@@ -24,10 +24,10 @@ The basic flow is something like.
 
 ```shell
 $ ghcc orgs add <name>
-$ ghcc users refresh
-$ ghcc repos add -n <repo name> -o <org name>
-$ ghcc prs
-$ ghcc reviews refresh
+$ ghcc users refresh -v
+$ ghcc repos add -n <repo name> -o <org name> -v
+$ ghcc prs -v
+$ ghcc reviews refresh -v
 $ ghcc contributions all
 ```
 

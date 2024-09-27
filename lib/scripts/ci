@@ -2,4 +2,5 @@
 set -e
 
 bundle exec rubocop -A
+bundle exec rubycritic lib
 bundle exec turbo_tests ./**/*_spec.rb --format documentation
