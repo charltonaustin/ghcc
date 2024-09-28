@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'thor'
 require_relative 'refresh'
 module Reviews
   class Command < Thor
