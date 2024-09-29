@@ -1,6 +1,8 @@
 #!/bin/zsh
 set -e
 
+mkdir -p data
+bundle install
 bundle exec rubocop -A
 bundle exec rubycritic lib
 bundle exec turbo_tests ./**/*_spec.rb --format documentation
