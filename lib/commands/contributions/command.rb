@@ -2,6 +2,9 @@
 
 require 'thor'
 require_relative 'user_details'
+require_relative '../../shared/database'
+require_relative '../../shared/logger'
+require_relative 'process_contributions'
 module Contributions
   class Command < Thor
     desc 'details', 'Get details for a user'
