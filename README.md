@@ -49,10 +49,23 @@ See the lib/scripts file
 
 ### CLI Commands
 #### To run
-Before you install it cd to the root directory and run the following: 
+Before you install it cd to the root directory and run the following:
 ```sh
-./ghcc install
+./ghcc dev install
+./ghcc dev run_migrations
 ```
+
+You might run into issues with creating symlinks. Try sudo if you dare.
+
+DB isn't created on its own:
+```sh
+sqlite3 ghcc.db
+```
+
+depending on where your db is located, you might have to change
+the connection location in `lib/shared/database.rb`
+
+
 After you install it you can simply run the command
 ```sh
 ghcc help
