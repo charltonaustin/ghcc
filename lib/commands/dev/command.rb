@@ -3,7 +3,7 @@
 require 'thor'
 module Dev
   class Command < Thor
-    desc 'install', 'Symlinks this file to /usr/local/bin'
+    desc 'install', 'Symlinks ghcc to /usr/local/bin'
 
     def install
       ghcc_path = File.expand_path("#{__FILE__}/../../../../ghcc")
