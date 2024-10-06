@@ -2,6 +2,7 @@
 
 require 'rspec'
 require 'Date'
+require 'octokit'
 require_relative 'refresh'
 
 def setup
@@ -21,11 +22,27 @@ def setup_multiple_users
   [client, n]
 end
 
+def given_the_client_throws_an_exception
+  client = double('client')
+  allow(client).to receive(:pull_request_reviews).and_raise(Octokit::NotFound)
+  logger = double('logger')
+  allow(Reviews).to receive_messages(get_pull_requests_for_reviews: [{ repository: 'repo', number: 1 }],
+                                     check_for: false)
+  [client, logger]
+end
+
 RSpec.describe 'refresh' do
   it 'saves as many time as reviews are returned' do
     n, client = setup
     Reviews.refresh(double('db'), client, double('logger').as_null_object, Date.today.to_s,
                     (Date.today - 14).to_s)
     expect(Reviews).to have_received(:insert).exactly(n).times
+  end
+
+  it 'logs exception on error' do
+    client, logger = given_the_client_throws_an_exception
+    Reviews.refresh(double('db').as_null_object, client, logger.as_null_object, Date.today.to_s,
+                    (Date.today - 14).to_s)
+    expect(logger).to have_received(:error)
   end
 end

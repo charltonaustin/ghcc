@@ -18,14 +18,12 @@ module Reviews
   private_class_method def self.get_reviews(client, logger, pull_request)
     logger.debug("pull_request[:repository]: #{pull_request[:repository]}")
     logger.debug("pull_request[:number]: #{pull_request[:number]}")
-    begin
-      client.pull_request_reviews(pull_request[:repository], pull_request[:number]).map do |r|
-        { repository: pull_request[:repository], user: r[:user][:login], html_url: r[:html_url],
-          submitted_at: r[:submitted_at] }
-      end
-    rescue Octokit::NotFound => e
-      logger.error(e)
+    client.pull_request_reviews(pull_request[:repository], pull_request[:number]).map do |r|
+      { repository: pull_request[:repository], user: r[:user][:login], html_url: r[:html_url],
+        submitted_at: r[:submitted_at] }
     end
+  rescue Octokit::NotFound => e
+    logger.error(e)
   end
 
   private_class_method def self.save_review(db, logger, review)
