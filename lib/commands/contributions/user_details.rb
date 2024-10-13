@@ -52,7 +52,6 @@ end
 def print_details(logger, date_range, user_contributions, ignore_reviews)
   log_details(logger, date_range, user_contributions)
   commit_urls, name, prs_urls, review_urls, review_string = calculate(ignore_reviews, user_contributions)
-
   puts "#{name}\ntotal: #{commit_urls.size + prs_urls.size + review_urls.size}" + review_string +
        print_string_for('commits', commit_urls) +
        print_string_for('prs', prs_urls)
@@ -62,9 +61,7 @@ def get_contributions_name(db, logger, date_range, name)
   logger.debug("QUERY IS: SELECT user_name FROM users WHERE name = '#{name}'")
   ds = db['SELECT user_name FROM users WHERE name = ?', name]
   logger.debug("ds.empty?: #{ds.empty?}")
-  logger.debug("ds.first[:user_name]: #{ds.first[:user_name]}")
   uname = ds.first[:user_name] unless ds.empty?
-  logger.debug("uname: #{uname}")
   contributions = get_contributions_uname(db, logger, date_range, uname)
   contributions[:name] = name
   contributions
